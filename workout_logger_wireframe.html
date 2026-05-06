@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Workout Logger — Wireframe</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    background: #F5F5F3;
+    color: #1a1a1a;
+    padding: 40px 24px;
+    min-height: 100vh;
+  }
+
+  .doc-header {
+    max-width: 1000px;
+    margin: 0 auto 40px;
+    border-bottom: 1px solid #E0DED8;
+    padding-bottom: 20px;
+  }
+  .doc-title { font-size: 24px; font-weight: 600; color: #111; margin-bottom: 4px; }
+  .doc-sub { font-size: 13px; color: #888; }
+
+  .screens-grid {
+    max-width: 1000px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+  }
+  .full { grid-column: 1 / -1; }
+
+  .screen-wrap { display: flex; flex-direction: column; gap: 8px; }
+  .screen-label {
+    font-size: 10px;
+    font-weight: 600;
+    color: #999;
+    text-transform: uppercase;
+    letter-spacing: .1em;
+  }
+
+  .screen {
+    background: #fff;
+    border: 1px solid #E0DED8;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+  }
+
+  /* Nav */
+  .nav-bar {
+    background: #FAFAF8;
+    border-bottom: 1px solid #E8E6E0;
+    padding: 10px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .nav-logo { font-size: 13px; font-weight: 600; color: #111; display: flex; align-items: center; gap: 6px; }
+  .nav-logo svg { width: 16px; height: 16px; }
+  .nav-links { display: flex; gap: 16px; }
+  .nav-link { font-size: 11px; color: #999; text-decoration: none; }
+  .nav-link.active { color: #111; font-weight: 500; }
+  .nav-back { font-size: 11px; color: #999; display: flex; align-items: center; gap: 4px; }
+  .nav-actions { display: flex; gap: 6px; }
+
+  /* Body */
+  .screen-body { padding: 16px; }
+  .page-title { font-size: 15px; font-weight: 600; color: #111; margin-bottom: 14px; }
+
+  /* Stat cards */
+  .stat-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 16px; }
+  .stat-card { background: #F5F5F3; border-radius: 8px; padding: 10px 12px; }
+  .stat-label { font-size: 10px; color: #999; margin-bottom: 2px; }
+  .stat-val { font-size: 20px; font-weight: 600; color: #111; }
+
+  /* Log items */
+  .section-head { font-size: 10px; font-weight: 600; color: #999; text-transform: uppercase; letter-spacing: .08em; margin-bottom: 8px; }
+  .log-item {
+    border: 1px solid #EEECEA;
+    border-radius: 8px;
+    padding: 10px 12px;
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .log-title { font-size: 13px; font-weight: 500; color: #111; margin-bottom: 2px; }
+  .log-meta { font-size: 11px; color: #999; }
+  .log-right { display: flex; align-items: center; gap: 8px; }
+
+  /* Badges */
+  .badge { font-size: 10px; font-weight: 500; padding: 2px 9px; border-radius: 999px; }
+  .badge-push    { background: #E6F1FB; color: #185FA5; }
+  .badge-pull    { background: #E1F5EE; color: #0F6E56; }
+  .badge-legs    { background: #FAEEDA; color: #854F0B; }
+  .badge-full    { background: #EEEDFE; color: #3C3489; }
+  .badge-cardio  { background: #FAECE7; color: #993C1D; }
+
+  /* Buttons */
+  .btn {
+    font-size: 11px;
+    padding: 5px 12px;
+    border-radius: 7px;
+    border: 1px solid #D5D3CD;
+    background: transparent;
+    color: #333;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    white-space: nowrap;
+  }
+  .btn-primary { background: #111; color: #fff; border-color: #111; }
+  .btn-danger { color: #C0392B; border-color: #FADADD; }
+  .btn-full { width: 100%; justify-content: center; margin-top: 10px; padding: 8px; }
+
+  /* Filter chips */
+  .filter-row { display: flex; gap: 6px; margin-bottom: 14px; flex-wrap: wrap; }
+  .chip {
+    font-size: 11px;
+    padding: 4px 11px;
+    border-radius: 999px;
+    border: 1px solid #D5D3CD;
+    background: transparent;
+    color: #777;
+    cursor: pointer;
+  }
+  .chip.on { background: #111; color: #fff; border-color: #111; }
+
+  /* Chevron */
+  .chevron { font-size: 14px; color: #CCC; }
+
+  /* Detail screen */
+  .detail-header { display: flex; align-items: center; gap: 8px; margin-bottom: 4px; }
+  .detail-meta { font-size: 11px; color: #999; margin-bottom: 14px; }
+  .divider { border: none; border-top: 1px solid #EEECEA; margin: 12px 0; }
+
+  .exercise-block { border: 1px solid #EEECEA; border-radius: 8px; padding: 10px 12px; margin-bottom: 8px; }
+  .exercise-name { font-size: 12px; font-weight: 600; color: #111; margin-bottom: 8px; display: flex; align-items: center; gap: 5px; }
+  .set-table { width: 100%; border-collapse: collapse; font-size: 11px; }
+  .set-table th { color: #999; font-weight: 500; text-align: left; padding-bottom: 4px; }
+  .set-table td { color: #333; padding: 2px 0; }
+  .muscle-chips { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 8px; }
+  .muscle-chip { font-size: 10px; padding: 2px 8px; border-radius: 999px; background: #F5F5F3; color: #777; border: 1px solid #E8E6E0; }
+  .log-note { font-size: 11px; color: #999; font-style: italic; margin-top: 10px; }
+
+  /* Form */
+  .form-group { margin-bottom: 12px; }
+  .form-label { font-size: 11px; font-weight: 500; color: #777; display: block; margin-bottom: 4px; }
+  .required { color: #E74C3C; }
+  .form-input {
+    width: 100%;
+    font-size: 12px;
+    padding: 7px 10px;
+    border-radius: 7px;
+    border: 1px solid #D5D3CD;
+    background: #fff;
+    color: #111;
+    font-family: inherit;
+  }
+  .form-input:focus { outline: none; border-color: #999; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+
+  /* Intensity */
+  .intensity-group { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
+  .intensity-opt {
+    border: 1px solid #D5D3CD;
+    border-radius: 8px;
+    padding: 8px 4px;
+    text-align: center;
+    cursor: pointer;
+    transition: all .15s;
+  }
+  .intensity-opt svg { width: 18px; height: 18px; display: block; margin: 0 auto 3px; }
+  .intensity-opt span { font-size: 10px; color: #999; }
+  .intensity-opt.active { border-color: #111; background: #F5F5F3; }
+  .intensity-opt.active span { color: #111; font-weight: 500; }
+  .i-light svg { color: #1D9E75; }
+  .i-mod svg   { color: #BA7517; }
+  .i-heavy svg { color: #D85A30; }
+  .i-max svg   { color: #A32D2D; }
+
+  /* Exercise rows in form */
+  .form-exercise { border: 1px solid #EEECEA; border-radius: 8px; padding: 10px 12px; margin-bottom: 6px; }
+  .form-exercise-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+  .form-exercise-name { font-size: 12px; font-weight: 600; color: #111; }
+  .trash-btn { background: none; border: none; cursor: pointer; color: #CCC; font-size: 14px; }
+
+  .add-exercise-btn {
+    width: 100%;
+    padding: 8px;
+    border: 1px dashed #CCC;
+    border-radius: 8px;
+    font-size: 12px;
+    color: #999;
+    background: transparent;
+    cursor: pointer;
+    text-align: center;
+    margin-top: 6px;
+    font-family: inherit;
+  }
+
+  /* Exercise browser */
+  .browser-layout { display: flex; gap: 16px; }
+  .browser-sidebar { min-width: 130px; }
+  .browser-main { flex: 1; }
+  .sidebar-section { margin-bottom: 14px; }
+  .sidebar-filter-chip {
+    display: block;
+    width: 100%;
+    font-size: 11px;
+    padding: 5px 10px;
+    border-radius: 999px;
+    border: 1px solid #D5D3CD;
+    background: transparent;
+    color: #777;
+    cursor: pointer;
+    text-align: center;
+    margin-bottom: 4px;
+    font-family: inherit;
+  }
+  .sidebar-filter-chip.on { background: #111; color: #fff; border-color: #111; }
+  .radio-opt, .check-opt {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    color: #777;
+    margin-bottom: 5px;
+    cursor: pointer;
+  }
+  .ex-card {
+    border: 1px solid #EEECEA;
+    border-radius: 8px;
+    padding: 10px 12px;
+    margin-bottom: 6px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 8px;
+  }
+  .ex-card-title { font-size: 12px; font-weight: 600; color: #111; margin-bottom: 3px; }
+  .ex-card-meta  { font-size: 10px; color: #999; margin-bottom: 6px; }
+  .diff-badge { font-size: 10px; font-weight: 500; padding: 2px 8px; border-radius: 999px; }
+  .diff-beg { background: #EAF3DE; color: #3B6D11; }
+  .diff-int { background: #FAEEDA; color: #854F0B; }
+  .diff-adv { background: #FCEBEB; color: #A32D2D; }
+
+  .search-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+
+  /* SVG icons inline */
+  .icon { width: 14px; height: 14px; display: inline-block; vertical-align: middle; }
+</style>
+</head>
+<body>
+
+<div class="doc-header">
+  <p class="doc-title">Workout Logger — Wireframe</p>
+  <p class="doc-sub">MVP · Django + React · 6 screens · Updated: Workout Type removed, Intensity Level added, Exercise Picker flow added</p>
+</div>
+
+<div class="screens-grid">
+
+  <!-- Screen 1: Dashboard -->
+  <div class="screen-wrap">
+    <p class="screen-label">1 · Dashboard</p>
+    <div class="screen">
+      <div class="nav-bar">
+        <span class="nav-logo">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 4v6m0 4v6M18 4v6m0 4v6M3 10h18M3 14h18"/></svg>
+          Workout Logger
+        </span>
+        <div class="nav-links">
+          <a class="nav-link active" href="#">Dashboard</a>
+          <a class="nav-link" href="#">My Logs</a>
+          <a class="nav-link" href="#">Exercises</a>
+        </div>
+      </div>
+      <div class="screen-body">
+        <p class="page-title">Good morning, Jack 👋</p>
+        <div class="stat-row">
+          <div class="stat-card"><p class="stat-label">This week</p><p class="stat-val">4</p></div>
+          <div class="stat-card"><p class="stat-label">Total logs</p><p class="stat-val">38</p></div>
+          <div class="stat-card"><p class="stat-label">Streak</p><p class="stat-val">6d</p></div>
+        </div>
+        <p class="section-head">Recent workouts</p>
+        <div class="log-item">
+          <div><p class="log-title">Monday Push</p><p class="log-meta">Today · 5 exercises</p></div>
+          <span class="badge badge-push">Push</span>
+        </div>
+        <div class="log-item">
+          <div><p class="log-title">Sunday Cardio</p><p class="log-meta">Yesterday · 3 exercises</p></div>
+          <span class="badge badge-cardio">Cardio</span>
+        </div>
+        <div class="log-item">
+          <div><p class="log-title">Saturday Legs</p><p class="log-meta">2 days ago · 6 exercises</p></div>
+          <span class="badge badge-legs">Legs</span>
+        </div>
+        <button class="btn btn-primary btn-full">+ Log new workout</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Screen 2: My Logs -->
+  <div class="screen-wrap">
+    <p class="screen-label">2 · My logs</p>
+    <div class="screen">
+      <div class="nav-bar">
+        <span class="nav-logo">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 4v6m0 4v6M18 4v6m0 4v6M3 10h18M3 14h18"/></svg>
+          Workout Logger
+        </span>
+        <div class="nav-links">
+          <a class="nav-link" href="#">Dashboard</a>
+          <a class="nav-link active" href="#">My Logs</a>
+          <a class="nav-link" href="#">Exercises</a>
+        </div>
+      </div>
+      <div class="screen-body">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;">
+          <p class="page-title" style="margin:0;">My workout logs</p>
+          <button class="btn btn-primary">+ New log</button>
+        </div>
+        <div class="filter-row">
+          <span class="chip on">All</span>
+          <span class="chip">Push</span>
+          <span class="chip">Pull</span>
+          <span class="chip">Legs</span>
+          <span class="chip">Cardio</span>
+        </div>
+        <div class="log-item">
+          <div><p class="log-title">Monday Push</p><p class="log-meta">May 5, 2026 · 5 exercises</p></div>
+          <div class="log-right"><span class="badge badge-push">Push</span><span class="chevron">›</span></div>
+        </div>
+        <div class="log-item">
+          <div><p class="log-title">Sunday Cardio</p><p class="log-meta">May 4, 2026 · 3 exercises</p></div>
+          <div class="log-right"><span class="badge badge-cardio">Cardio</span><span class="chevron">›</span></div>
+        </div>
+        <div class="log-item">
+          <div><p class="log-title">Saturday Legs</p><p class="log-meta">May 3, 2026 · 6 exercises</p></div>
+          <div class="log-right"><span class="badge badge-legs">Legs</span><span class="chevron">›</span></div>
+        </div>
+        <div class="log-item">
+          <div><p class="log-title">Friday Pull</p><p class="log-meta">May 2, 2026 · 4 exercises</p></div>
+          <div class="log-right"><span class="badge badge-pull">Pull</span><span class="chevron">›</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Screen 3: Log Detail -->
+  <div class="screen-wrap">
+    <p class="screen-label">3 · Log detail</p>
+    <div class="screen">
+      <div class="nav-bar">
+        <span class="nav-back">‹ My Logs</span>
+        <div class="nav-actions">
+          <button class="btn">✏ Edit</button>
+          <button class="btn btn-danger">🗑</button>
+        </div>
+      </div>
+      <div class="screen-body">
+        <div class="detail-header">
+          <p class="page-title" style="margin:0;">Monday Push</p>
+          <span class="badge badge-push">Push</span>
+        </div>
+        <p class="detail-meta">May 5, 2026 · Heavy · 5 exercises</p>
+        <hr class="divider">
+        <div class="exercise-block">
+          <p class="exercise-name">🏋 Bench Press</p>
+          <table class="set-table">
+            <tr><th>Set</th><th>Reps</th><th>Weight</th></tr>
+            <tr><td>1</td><td>10</td><td>135 lbs</td></tr>
+            <tr><td>2</td><td>8</td><td>155 lbs</td></tr>
+            <tr><td>3</td><td>6</td><td>175 lbs</td></tr>
+          </table>
+          <div class="muscle-chips">
+            <span class="muscle-chip">Chest</span>
+            <span class="muscle-chip">Triceps</span>
+            <span class="muscle-chip">Front Delts</span>
+          </div>
+        </div>
+        <div class="exercise-block">
+          <p class="exercise-name">🏋 Overhead Press</p>
+          <table class="set-table">
+            <tr><th>Set</th><th>Reps</th><th>Weight</th></tr>
+            <tr><td>1</td><td>10</td><td>95 lbs</td></tr>
+            <tr><td>2</td><td>8</td><td>105 lbs</td></tr>
+          </table>
+          <div class="muscle-chips">
+            <span class="muscle-chip">Shoulders</span>
+            <span class="muscle-chip">Triceps</span>
+          </div>
+        </div>
+        <p class="log-note">"Felt strong today. Bench felt easy."</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Screen 4: Add Workout Form (updated — no workout type) -->
+  <div class="screen-wrap">
+    <p class="screen-label">4 · Add workout form</p>
+    <div class="screen">
+      <div class="nav-bar">
+        <span class="nav-back">‹ My Logs</span>
+        <button class="btn btn-primary">Save log</button>
+      </div>
+      <div class="screen-body">
+        <p class="page-title">Log a workout</p>
+
+        <div class="form-group">
+          <label class="form-label">Workout title</label>
+          <input class="form-input" type="text" placeholder="e.g. Monday Push Day">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Date</label>
+          <input class="form-input" type="date" value="2026-05-06">
+        </div>
+
+        <hr class="divider">
+
+        <div class="form-group">
+          <label class="form-label">Intensity level <span class="required">*</span></label>
+          <div class="intensity-group">
+            <div class="intensity-opt i-light active">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#1D9E75" stroke-width="2"><path d="M12 2c0 6-6 8-6 14a6 6 0 0012 0c0-6-6-8-6-14z"/></svg>
+              <span>Light</span>
+            </div>
+            <div class="intensity-opt i-mod">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#BA7517" stroke-width="2"><path d="M12 2c0 6-6 8-6 14a6 6 0 0012 0c0-6-6-8-6-14z"/></svg>
+              <span>Moderate</span>
+            </div>
+            <div class="intensity-opt i-heavy">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#D85A30" stroke-width="2"><path d="M12 2c0 6-6 8-6 14a6 6 0 0012 0c0-6-6-8-6-14z"/></svg>
+              <span>Heavy</span>
+            </div>
+            <div class="intensity-opt i-max">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#A32D2D" stroke-width="2"><path d="M12 2c0 6-6 8-6 14a6 6 0 0012 0c0-6-6-8-6-14z"/></svg>
+              <span>Max Effort</span>
+            </div>
+          </div>
+        </div>
+
+        <hr class="divider">
+
+        <p class="section-head">Exercises</p>
+        <div class="form-exercise">
+          <div class="form-exercise-head">
+            <span class="form-exercise-name">Bench Press</span>
+            <button class="trash-btn">🗑</button>
+          </div>
+          <div class="form-row">
+            <div><label class="form-label">Sets</label><input class="form-input" type="number" placeholder="3"></div>
+            <div><label class="form-label">Reps</label><input class="form-input" type="number" placeholder="10"></div>
+          </div>
+          <div style="margin-top:8px;">
+            <label class="form-label">Weight (lbs)</label>
+            <input class="form-input" type="number" placeholder="135">
+          </div>
+        </div>
+        <button class="add-exercise-btn">+ Add exercise</button>
+
+        <div class="form-group" style="margin-top:14px;">
+          <label class="form-label">Notes</label>
+          <textarea class="form-input" rows="2" placeholder="How did the session feel?" style="resize:vertical;"></textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Screen 4b/4c: Exercise Picker Flow — full width -->
+  <div class="screen-wrap full">
+    <p class="screen-label">4b–4c · Exercise picker flow</p>
+    <p style="font-size:12px;color:#999;margin:0 0 14px;">What happens when the user taps "+ Add exercise" on the form.</p>
+    <div style="display:grid;grid-template-columns:1fr 32px 1fr 32px 1fr;gap:0;align-items:start;">
+
+      <!-- 4a: before -->
+      <div class="screen-wrap">
+        <p class="screen-label" style="margin-bottom:6px;">4a · Form (before)</p>
+        <div class="screen">
+          <div class="nav-bar">
+            <span class="nav-back">‹ My Logs</span>
+            <button class="btn btn-primary">Save log</button>
+          </div>
+          <div class="screen-body">
+            <p class="page-title">Log a workout</p>
+            <div class="form-group">
+              <label class="form-label">Workout title</label>
+              <input class="form-input" type="text" placeholder="e.g. Monday Push Day">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Date</label>
+              <input class="form-input" type="text" placeholder="May 6, 2026">
+            </div>
+            <hr class="divider">
+            <div class="form-group">
+              <label class="form-label">Intensity level <span class="required">*</span></label>
+              <div class="intensity-group">
+                <div class="intensity-opt i-light active">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="#1D9E75" stroke-width="2"><path d="M12 2c0 6-6 8-6 14a6 6 0 0012 0c0-6-6-8-6-14z"/></svg>
+                  <span>Light</span>
+                </div>
+                <div class="intensity-opt i-mod">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="#BA7517" stroke-width="2"><path d="M12 2c0 6-6 8-6 14a6 6 0 0012 0c0-6-6-8-6-14z"/></svg>
+                  <span>Moderate</span>
+                </div>
+                <div class="intensity-opt i-heavy">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="#D85A30" stroke-width="2"><path d="M12 2c0 6-6 8-6 14a6 6 0 0012 0c0-6-6-8-6-14z"/></svg>
+                  <span>Heavy</span>
+                </div>
+                <div class="intensity-opt i-max">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="#A32D2D" stroke-width="2"><path d="M12 2c0 6-6 8-6 14a6 6 0 0012 0c0-6-6-8-6-14z"/></svg>
+                  <span>Max Effort</span>
+                </div>
+              </div>
+            </div>
+            <hr class="divider">
+            <p class="section-head">Exercises</p>
+            <p style="font-size:11px;color:#999;margin:0 0 8px;font-style:italic;">No exercises added yet.</p>
+            <button class="add-exercise-btn">+ Add exercise</button>
+            <div class="form-group" style="margin-top:12px;">
+              <label class="form-label">Notes</label>
+              <textarea class="form-input" rows="2" placeholder="How did the session feel?" style="resize:none;"></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- arrow 1 -->
+      <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;padding-top:80px;gap:4px;">
+        <span style="font-size:20px;color:#CCC;">→</span>
+        <span style="font-size:9px;color:#999;text-align:center;">tap "+ Add<br>exercise"</span>
+      </div>
+
+      <!-- 4b: picker modal -->
+      <div class="screen-wrap">
+        <p class="screen-label" style="margin-bottom:6px;">4b · Exercise picker</p>
+        <div class="screen" style="position:relative;">
+          <div class="nav-bar">
+            <span class="nav-back">‹ My Logs</span>
+            <button class="btn btn-primary" style="opacity:0.3;">Save log</button>
+          </div>
+          <div class="screen-body" style="min-height:380px;position:relative;">
+            <div style="opacity:0.25;">
+              <p class="page-title">Log a workout</p>
+              <div class="form-group">
+                <label class="form-label">Workout title</label>
+                <input class="form-input" type="text" placeholder="e.g. Monday Push Day">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Date</label>
+                <input class="form-input" type="text" placeholder="May 6, 2026">
+              </div>
+            </div>
+            <!-- bottom sheet -->
+            <div style="position:absolute;inset:0;background:rgba(0,0,0,0.32);border-radius:0 0 12px 12px;display:flex;align-items:flex-end;">
+              <div style="background:#fff;border-radius:12px 12px 0 0;width:100%;border-top:1px solid #E0DED8;">
+                <div style="background:#FAFAF8;border-bottom:1px solid #E8E6E0;padding:10px 14px;display:flex;align-items:center;justify-content:space-between;">
+                  <span style="font-size:13px;font-weight:600;color:#111;">Choose an exercise</span>
+                  <span style="font-size:16px;color:#999;cursor:pointer;">✕</span>
+                </div>
+                <div style="padding:12px 14px;">
+                  <input class="form-input" type="text" placeholder="Search exercises…" style="margin-bottom:10px;">
+                  <div class="filter-row" style="margin-bottom:10px;">
+                    <span class="chip on">All</span>
+                    <span class="chip">Strength</span>
+                    <span class="chip">Cardio</span>
+                    <span class="chip">Flexibility</span>
+                  </div>
+                  <!-- selected row -->
+                  <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 10px;border:1px solid #111;border-radius:8px;background:#F5F5F3;margin-bottom:5px;">
+                    <div>
+                      <p style="font-size:12px;font-weight:600;color:#111;margin:0 0 2px;">Bench Press</p>
+                      <p style="font-size:10px;color:#999;margin:0;">Chest · Triceps · Front Delts</p>
+                    </div>
+                    <div style="display:flex;align-items:center;gap:6px;">
+                      <span class="diff-badge diff-int">Intermediate</span>
+                      <div style="width:18px;height:18px;border-radius:50%;background:#111;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                        <svg width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="white" stroke-width="2"><polyline points="2,6 5,9 10,3"/></svg>
+                      </div>
+                    </div>
+                  </div>
+                  <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 10px;border:1px solid #EEECEA;border-radius:8px;margin-bottom:5px;">
+                    <div>
+                      <p style="font-size:12px;font-weight:600;color:#111;margin:0 0 2px;">Push-Up</p>
+                      <p style="font-size:10px;color:#999;margin:0;">Chest · Triceps · Core</p>
+                    </div>
+                    <div style="display:flex;align-items:center;gap:6px;">
+                      <span class="diff-badge diff-beg">Beginner</span>
+                      <button class="btn" style="font-size:11px;padding:3px 9px;">+ Add</button>
+                    </div>
+                  </div>
+                  <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 10px;border:1px solid #EEECEA;border-radius:8px;">
+                    <div>
+                      <p style="font-size:12px;font-weight:600;color:#111;margin:0 0 2px;">Incline DB Press</p>
+                      <p style="font-size:10px;color:#999;margin:0;">Upper Chest · Front Delts</p>
+                    </div>
+                    <div style="display:flex;align-items:center;gap:6px;">
+                      <span class="diff-badge diff-int">Intermediate</span>
+                      <button class="btn" style="font-size:11px;padding:3px 9px;">+ Add</button>
+                    </div>
+                  </div>
+                </div>
+                <div style="padding:10px 14px;border-top:1px solid #E8E6E0;background:#FAFAF8;display:flex;align-items:center;justify-content:space-between;">
+                  <span style="font-size:11px;color:#999;">1 exercise selected</span>
+                  <button class="btn btn-primary">Confirm selection</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- arrow 2 -->
+      <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;padding-top:80px;gap:4px;">
+        <span style="font-size:20px;color:#CCC;">→</span>
+        <span style="font-size:9px;color:#999;text-align:center;">tap "Confirm<br>selection"</span>
+      </div>
+
+      <!-- 4c: form after -->
+      <div class="screen-wrap">
+        <p class="screen-label" style="margin-bottom:6px;">4c · Form (after)</p>
+        <div class="screen">
+          <div class="nav-bar">
+            <span class="nav-back">‹ My Logs</span>
+            <button class="btn btn-primary">Save log</button>
+          </div>
+          <div class="screen-body">
+            <p class="page-title">Log a workout</p>
+            <div class="form-group">
+              <label class="form-label">Workout title</label>
+              <input class="form-input" type="text" placeholder="e.g. Monday Push Day">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Date</label>
+              <input class="form-input" type="text" placeholder="May 6, 2026">
+            </div>
+            <hr class="divider">
+            <div class="form-group">
+              <label class="form-label">Intensity level <span class="required">*</span></label>
+              <div class="intensity-group">
+                <div class="intensity-opt i-light active">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="#1D9E75" stroke-width="2"><path d="M12 2c0 6-6 8-6 14a6 6 0 0012 0c0-6-6-8-6-14z"/></svg>
+                  <span>Light</span>
+                </div>
+                <div class="intensity-opt i-mod">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="#BA7517" stroke-width="2"><path d="M12 2c0 6-6 8-6 14a6 6 0 0012 0c0-6-6-8-6-14z"/></svg>
+                  <span>Moderate</span>
+                </div>
+                <div class="intensity-opt i-heavy">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="#D85A30" stroke-width="2"><path d="M12 2c0 6-6 8-6 14a6 6 0 0012 0c0-6-6-8-6-14z"/></svg>
+                  <span>Heavy</span>
+                </div>
+                <div class="intensity-opt i-max">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="#A32D2D" stroke-width="2"><path d="M12 2c0 6-6 8-6 14a6 6 0 0012 0c0-6-6-8-6-14z"/></svg>
+                  <span>Max Effort</span>
+                </div>
+              </div>
+            </div>
+            <hr class="divider">
+            <p class="section-head">Exercises</p>
+            <div class="form-exercise">
+              <div class="form-exercise-head">
+                <span class="form-exercise-name">Bench Press</span>
+                <button class="trash-btn">🗑</button>
+              </div>
+              <div class="form-row">
+                <div><label class="form-label">Sets</label><input class="form-input" type="number" placeholder="3"></div>
+                <div><label class="form-label">Reps</label><input class="form-input" type="number" placeholder="10"></div>
+              </div>
+              <div style="margin-top:8px;">
+                <label class="form-label">Weight (lbs)</label>
+                <input class="form-input" type="number" placeholder="135">
+              </div>
+            </div>
+            <button class="add-exercise-btn">+ Add exercise</button>
+            <div class="form-group" style="margin-top:12px;">
+              <label class="form-label">Notes</label>
+              <textarea class="form-input" rows="2" placeholder="How did the session feel?" style="resize:none;"></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Screen 5: Exercise Browser — full width -->
+  <div class="screen-wrap full">
+    <p class="screen-label">5 · Exercise browser</p>
+    <div class="screen">
+      <div class="nav-bar">
+        <span class="nav-logo">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 4v6m0 4v6M18 4v6m0 4v6M3 10h18M3 14h18"/></svg>
+          Workout Logger
+        </span>
+        <div class="nav-links">
+          <a class="nav-link" href="#">Dashboard</a>
+          <a class="nav-link" href="#">My Logs</a>
+          <a class="nav-link active" href="#">Exercises</a>
+        </div>
+      </div>
+      <div class="screen-body">
+        <div class="search-row">
+          <p class="page-title" style="margin:0;">Exercise browser</p>
+          <input class="form-input" type="text" placeholder="Search exercises…" style="width:200px;">
+        </div>
+        <div class="browser-layout">
+          <div class="browser-sidebar">
+            <div class="sidebar-section">
+              <p class="section-head">Category</p>
+              <button class="sidebar-filter-chip on">All</button>
+              <button class="sidebar-filter-chip">Strength</button>
+              <button class="sidebar-filter-chip">Cardio</button>
+              <button class="sidebar-filter-chip">Flexibility</button>
+              <button class="sidebar-filter-chip">Mobility</button>
+            </div>
+            <div class="sidebar-section">
+              <p class="section-head">Difficulty</p>
+              <label class="radio-opt"><input type="radio" name="diff" checked> All</label>
+              <label class="radio-opt"><input type="radio" name="diff"> Beginner</label>
+              <label class="radio-opt"><input type="radio" name="diff"> Intermediate</label>
+              <label class="radio-opt"><input type="radio" name="diff"> Advanced</label>
+            </div>
+            <div class="sidebar-section">
+              <p class="section-head">Muscle group</p>
+              <label class="check-opt"><input type="checkbox" checked> Chest</label>
+              <label class="check-opt"><input type="checkbox"> Back</label>
+              <label class="check-opt"><input type="checkbox"> Quads</label>
+              <label class="check-opt"><input type="checkbox"> Hamstrings</label>
+              <label class="check-opt"><input type="checkbox"> Shoulders</label>
+              <label class="check-opt"><input type="checkbox"> Core</label>
+              <label class="check-opt"><input type="checkbox"> Triceps</label>
+              <label class="check-opt"><input type="checkbox"> Biceps</label>
+            </div>
+          </div>
+          <div class="browser-main">
+            <div class="ex-card">
+              <div>
+                <p class="ex-card-title">Bench Press</p>
+                <p class="ex-card-meta">Strength · Chest, Triceps, Front Delts</p>
+                <span class="diff-badge diff-int">Intermediate</span>
+              </div>
+              <span class="chevron">›</span>
+            </div>
+            <div class="ex-card">
+              <div>
+                <p class="ex-card-title">Push-Up</p>
+                <p class="ex-card-meta">Strength · Chest, Triceps, Core</p>
+                <span class="diff-badge diff-beg">Beginner</span>
+              </div>
+              <span class="chevron">›</span>
+            </div>
+            <div class="ex-card">
+              <div>
+                <p class="ex-card-title">Incline Dumbbell Press</p>
+                <p class="ex-card-meta">Strength · Upper Chest, Front Delts</p>
+                <span class="diff-badge diff-int">Intermediate</span>
+              </div>
+              <span class="chevron">›</span>
+            </div>
+            <div class="ex-card">
+              <div>
+                <p class="ex-card-title">Cable Fly</p>
+                <p class="ex-card-meta">Strength · Chest, Front Delts</p>
+                <span class="diff-badge diff-adv">Advanced</span>
+              </div>
+              <span class="chevron">›</span>
+            </div>
+            <div class="ex-card">
+              <div>
+                <p class="ex-card-title">Dips</p>
+                <p class="ex-card-meta">Strength · Chest, Triceps, Shoulders</p>
+                <span class="diff-badge diff-int">Intermediate</span>
+              </div>
+              <span class="chevron">›</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
