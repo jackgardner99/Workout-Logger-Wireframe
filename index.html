@@ -260,7 +260,7 @@
 
 <div class="doc-header">
   <p class="doc-title">Workout Logger — Wireframe</p>
-  <p class="doc-sub">MVP · Django + React · 6 screens · Updated: Workout Type removed, Intensity Level added, Exercise Picker flow added</p>
+  <p class="doc-sub">MVP · Django + React · 7 screens · Updated: Workout Type removed, Intensity Level added, Exercise Picker flow added, Community Feed added</p>
 </div>
 
 <div class="screens-grid">
@@ -281,7 +281,7 @@
         </div>
       </div>
       <div class="screen-body">
-        <p class="page-title">Good morning, Jack 👋</p>
+        <p class="page-title">Good morning, Alex 👋</p>
         <div class="stat-row">
           <div class="stat-card"><p class="stat-label">This week</p><p class="stat-val">4</p></div>
           <div class="stat-card"><p class="stat-label">Total logs</p><p class="stat-val">38</p></div>
@@ -781,6 +781,119 @@
               <span class="chevron">›</span>
             </div>
           </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Screen 6: Community Feed — full width -->
+  <div class="screen-wrap full">
+    <p class="screen-label">6 · Community feed</p>
+    <div class="screen">
+      <div class="nav-bar">
+        <span class="nav-logo">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 4v6m0 4v6M18 4v6m0 4v6M3 10h18M3 14h18"/></svg>
+          Workout Logger
+        </span>
+        <div class="nav-links">
+          <a class="nav-link" href="#">Dashboard</a>
+          <a class="nav-link" href="#">My Logs</a>
+          <a class="nav-link" href="#">Exercises</a>
+          <a class="nav-link active" href="#">Community</a>
+        </div>
+      </div>
+      <div class="screen-body">
+        <div style="margin-bottom:14px;">
+          <p class="page-title" style="margin:0 0 2px;">Community feed</p>
+          <p style="font-size:12px;color:#999;margin:0;">Recent workouts from all users</p>
+        </div>
+
+        <div style="font-size:11px;color:#999;background:#FAFAF8;border-radius:8px;padding:7px 12px;margin-bottom:14px;border:1px solid #EEECEA;">
+          👀 Read-only — you can view but not edit other users' logs
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+
+          <div style="border:1px solid #EEECEA;border-radius:8px;padding:12px;">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
+              <div style="display:flex;align-items:center;gap:8px;">
+                <div style="width:28px;height:28px;border-radius:50%;background:#2E86C1;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;color:#fff;flex-shrink:0;">JR</div>
+                <div>
+                  <p style="font-size:12px;font-weight:500;color:#111;margin:0;">jordan_r</p>
+                  <p style="font-size:10px;color:#999;margin:0;">Today at 7:14am</p>
+                </div>
+              </div>
+              <span class="diff-badge" style="background:#FAECE7;color:#993C1D;">Heavy</span>
+            </div>
+            <p style="font-size:13px;font-weight:500;color:#111;margin:0 0 3px;">Monday Push</p>
+            <p style="font-size:11px;color:#999;margin:0 0 8px;">May 6, 2026 · 5 exercises</p>
+            <div style="display:flex;flex-wrap:wrap;gap:4px;">
+              <span class="muscle-chip">Bench Press</span>
+              <span class="muscle-chip">Overhead Press</span>
+              <span class="muscle-chip">+3 more</span>
+            </div>
+          </div>
+
+          <div style="border:1px solid #EEECEA;border-radius:8px;padding:12px;">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
+              <div style="display:flex;align-items:center;gap:8px;">
+                <div style="width:28px;height:28px;border-radius:50%;background:#1E8449;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;color:#fff;flex-shrink:0;">SM</div>
+                <div>
+                  <p style="font-size:12px;font-weight:500;color:#111;margin:0;">sarah_m</p>
+                  <p style="font-size:10px;color:#999;margin:0;">Yesterday at 6:30pm</p>
+                </div>
+              </div>
+              <span class="diff-badge" style="background:#FAEEDA;color:#854F0B;">Moderate</span>
+            </div>
+            <p style="font-size:13px;font-weight:500;color:#111;margin:0 0 3px;">Full Body Circuit</p>
+            <p style="font-size:11px;color:#999;margin:0 0 8px;">May 5, 2026 · 6 exercises</p>
+            <div style="display:flex;flex-wrap:wrap;gap:4px;">
+              <span class="muscle-chip">Squat</span>
+              <span class="muscle-chip">Deadlift</span>
+              <span class="muscle-chip">+4 more</span>
+            </div>
+          </div>
+
+          <div style="border:1px solid #EEECEA;border-radius:8px;padding:12px;">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
+              <div style="display:flex;align-items:center;gap:8px;">
+                <div style="width:28px;height:28px;border-radius:50%;background:#6C3483;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;color:#fff;flex-shrink:0;">DK</div>
+                <div>
+                  <p style="font-size:12px;font-weight:500;color:#111;margin:0;">dan_k</p>
+                  <p style="font-size:10px;color:#999;margin:0;">Yesterday at 5:00pm</p>
+                </div>
+              </div>
+              <span class="diff-badge" style="background:#FCEBEB;color:#A32D2D;">Max Effort</span>
+            </div>
+            <p style="font-size:13px;font-weight:500;color:#111;margin:0 0 3px;">Saturday Legs</p>
+            <p style="font-size:11px;color:#999;margin:0 0 8px;">May 5, 2026 · 4 exercises</p>
+            <div style="display:flex;flex-wrap:wrap;gap:4px;">
+              <span class="muscle-chip">Squat</span>
+              <span class="muscle-chip">Leg Press</span>
+              <span class="muscle-chip">+2 more</span>
+            </div>
+          </div>
+
+          <div style="border:1px solid #EEECEA;border-radius:8px;padding:12px;">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
+              <div style="display:flex;align-items:center;gap:8px;">
+                <div style="width:28px;height:28px;border-radius:50%;background:#CA6F1E;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;color:#fff;flex-shrink:0;">AL</div>
+                <div>
+                  <p style="font-size:12px;font-weight:500;color:#111;margin:0;">alex_l</p>
+                  <p style="font-size:10px;color:#999;margin:0;">2 days ago</p>
+                </div>
+              </div>
+              <span class="diff-badge" style="background:#E1F5EE;color:#0F6E56;">Light</span>
+            </div>
+            <p style="font-size:13px;font-weight:500;color:#111;margin:0 0 3px;">Morning Mobility</p>
+            <p style="font-size:11px;color:#999;margin:0 0 8px;">May 4, 2026 · 3 exercises</p>
+            <div style="display:flex;flex-wrap:wrap;gap:4px;">
+              <span class="muscle-chip">Hip Flexor Stretch</span>
+              <span class="muscle-chip">Cat-Cow</span>
+              <span class="muscle-chip">+1 more</span>
+            </div>
+          </div>
+
         </div>
       </div>
     </div>
